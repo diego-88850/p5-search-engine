@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import sys
 import bs4
+import re
 
 # Parse one HTML document at a time.  Note that this is still O(1) memory
 # WRT the number of documents in the dataset.
@@ -36,4 +37,6 @@ for line in sys.stdin:
     # Emit one line for each document, including the doc
     # ID and document content (You will need them later!)
     for line in content.split(" "):
-        print(f"{line.strip()} {doc_id}\t1")
+        text = re.sub(r"[^a-zA-Z0-9 ]+", "", line)
+        text = text.casefold()
+        print(f"{text.strip()} {doc_id}\t1")
