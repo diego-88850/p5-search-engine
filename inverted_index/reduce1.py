@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Reduce 0. This could have just been counted normally, but I did map reduce structure in case."""
+"""Reduce 1. Gets count of each word in ONE doc/HTML file."""
 import sys
 import itertools
 import os
@@ -7,8 +7,7 @@ import os
 def main():
     """Divide sorted lines into groups that share a key."""
     for key, group in itertools.groupby(sys.stdin, keyfunc):
-        if key == "<!DOCTYPE html>":
-            reduce_one_group(key, group)
+        reduce_one_group(key, group)
 
 
 def keyfunc(line):
@@ -22,7 +21,7 @@ def reduce_one_group(key, group):
     for line in group:
         count = line.partition("\t")[2]
         word_count += int(count)
-    print(word_count)
+    print(f"{key}\t{word_count}")
 
 if __name__ == "__main__":
     main()
