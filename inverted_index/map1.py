@@ -36,7 +36,15 @@ for line in sys.stdin:
     
     # Emit one line for each document, including the doc
     # ID and document content (You will need them later!)
+    stop_words = set()
+    
+    with open("stopwords.txt", 'r') as file:
+        for line in file:
+            line = re.sub("\n", "", line)
+            stop_words.add(line)
+
     for line in content.split(" "):
         text = re.sub(r"[^a-zA-Z0-9 ]+", "", line)
         text = text.casefold()
-        print(f"{text.strip()} {doc_id}\t1")
+        if text not in stop_words and text != '':
+            print(f"{text} {doc_id}\t1")

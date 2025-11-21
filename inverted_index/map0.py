@@ -3,4 +3,5 @@
 import sys
 
 for line in sys.stdin:
-    print(f"{line.strip()}\t1")
+    if line.strip() == "<!DOCTYPE html>":
+        print(f"{line.strip()}\t1")

@@ -43,9 +43,37 @@ madoop \
   -mapper ./map1.py \
   -reducer ./reduce1.py
 
-# Job 2
+# Job 2: Calculate idfk
 madoop \
   -input output1 \
   -output output2 \
   -mapper ./map2.py \
   -reducer ./reduce2.py
+
+# Job 3: Process idfk to get normative factor
+madoop \
+  -input output2 \
+  -output output3 \
+  -mapper ./map3.py \
+  -reducer ./reduce3.py
+
+# Job 4: Put it all together
+madoop \
+  -input output3 \
+  -output output4 \
+  -mapper ./map4.py \
+  -reducer ./reduce4.py
+
+# Job 5: Custom sorted output required by spec.
+  madoop \
+  -input output4 \
+  -output output \
+  -mapper ./map5.py \
+  -reducer ./reduce5.py  \
+  -partitioner ./partition.py \
+  -numReduceTasks 3
+
+  # cd ..
+  # rm -rf index_server/inverted_index/index/inverted_index/
+  # cp inverted_index/output/* index_server/index/inverted_index/
+  # cp inverted_index/*.txt index_server/index/inverted_index/
